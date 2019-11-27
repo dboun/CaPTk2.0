@@ -22,6 +22,15 @@ set(MITK_CaptkApp_PROVISIONING_FILE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/MitkCaptk
 #  - listed in the provisioning file for the executable
 #  - installed if they are external plug-ins
 
+set(_plugins
+  org.mitk.gui.common
+  org.blueberry.ui.qt
+  org.blueberry.ui.qt.log
+  org.mitk.gui.qt.application
+  org.mitk.gui.qt.extapplication
+  org.mitk.gui.qt.ext
+)
+
 set(_exclude_plugins
   org.blueberry.test
   org.blueberry.uitest
@@ -42,7 +51,7 @@ set(_exclude_plugins
 mitkFunctionCreateBlueBerryApplication(
   NAME MitkCaptkApp
   DESCRIPTION "MITK - CaptkApp Application"
-  #PLUGINS ${_plugins}
+  PLUGINS ${_plugins}
   EXCLUDE_PLUGINS(_exclude_plugins)
   ${_app_options}
 )
