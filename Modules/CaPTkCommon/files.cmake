@@ -1,0 +1,91 @@
+set(CPP_FILES
+	yaml-cpp/binary.cpp
+	yaml-cpp/exceptions.cpp
+	yaml-cpp/parse.cpp
+	yaml-cpp/setting.h
+	yaml-cpp/collectionstack.h
+	yaml-cpp/exp.cpp
+	yaml-cpp/parser.cpp
+	yaml-cpp/simplekey.cpp
+	yaml-cpp/exp.h
+	yaml-cpp/ptr_vector.h
+	yaml-cpp/singledocparser.cpp
+	yaml-cpp/convert.cpp
+	yaml-cpp/indentation.h
+	yaml-cpp/regeximpl.h
+	yaml-cpp/singledocparser.h
+	yaml-cpp/directives.cpp
+	yaml-cpp/memory.cpp
+	yaml-cpp/regex_yaml.cpp  streamcharsource.h
+	yaml-cpp/directives.h
+	yaml-cpp/nodebuilder.cpp
+	yaml-cpp/regex_yaml.h
+	yaml-cpp/stream.cpp
+	yaml-cpp/emit.cpp
+	yaml-cpp/nodebuilder.h
+	yaml-cpp/scanner.cpp
+	yaml-cpp/stream.h
+	yaml-cpp/emitfromevents.cpp
+	yaml-cpp/node.cpp
+	yaml-cpp/scanner.h
+	yaml-cpp/stringsource.h
+	yaml-cpp/emitter.cpp
+	yaml-cpp/node_data.cpp
+	yaml-cpp/scanscalar.cpp
+	yaml-cpp/tag.cpp
+	yaml-cpp/emitterstate.cpp
+	yaml-cpp/nodeevents.cpp
+	yaml-cpp/scanscalar.h
+	yaml-cpp/tag.h
+	yaml-cpp/emitterstate.h
+	yaml-cpp/nodeevents.h
+	yaml-cpp/scantag.cpp
+	yaml-cpp/token.h
+	yaml-cpp/emitterutils.cpp
+	yaml-cpp/null.cpp
+	yaml-cpp/scantag.h
+	yaml-cpp/contrib/graphbuilderadapter.cpp
+	yaml-cpp/contrib/graphbuilderadapter.h
+	yaml-cpp/contrib/graphbuilder.cpp
+)
+
+set(UI_FILES
+
+)
+
+set(MOC_H_FILES
+	src/yaml-cpp/include/yaml-cpp/anchor.h  
+	src/yaml-cpp/include/yaml-cpp/emitfromevents.h  
+	src/yaml-cpp/include/yaml-cpp/emitterstyle.h  
+	src/yaml-cpp/include/yaml-cpp/node               
+	src/yaml-cpp/include/yaml-cpp/parser.h
+	src/yaml-cpp/include/yaml-cpp/binary.h  
+	src/yaml-cpp/include/yaml-cpp/emitterdef.h      
+	src/yaml-cpp/include/yaml-cpp/eventhandler.h  
+	src/yaml-cpp/include/yaml-cpp/noncopyable.h      
+	src/yaml-cpp/include/yaml-cpp/stlemitter.h
+	src/yaml-cpp/include/yaml-cpp/contrib   
+	src/yaml-cpp/include/yaml-cpp/emitter.h         
+	src/yaml-cpp/include/yaml-cpp/exceptions.h    
+	src/yaml-cpp/include/yaml-cpp/null.h             
+	src/yaml-cpp/include/yaml-cpp/traits.h
+	src/yaml-cpp/include/yaml-cpp/dll.h     
+	src/yaml-cpp/include/yaml-cpp/emittermanip.h    
+	src/yaml-cpp/include/yaml-cpp/mark.h          
+	src/yaml-cpp/include/yaml-cpp/ostream_wrapper.h  
+	src/yaml-cpp/include/yaml-cpp/yaml.h
+	src/yaml-cpp/include/yaml-cpp/contrib/anchordict.h  contrib/graphbuilder.h
+	src/yaml-cpp/include/yaml-cpp/node/convert.h
+	src/yaml-cpp/include/yaml-cpp/node/detail
+	src/yaml-cpp/include/yaml-cpp/node/emit.h
+	src/yaml-cpp/include/yaml-cpp/node/impl.h
+	src/yaml-cpp/include/yaml-cpp/node/iterator.h
+	src/yaml-cpp/include/yaml-cpp/node/node.h
+	src/yaml-cpp/include/yaml-cpp/node/parse.h
+	src/yaml-cpp/include/yaml-cpp/node/ptr.h
+	src/yaml-cpp/include/yaml-cpp/node/type.h
+)
+
+set(RESOURCE_FILES
+
+)

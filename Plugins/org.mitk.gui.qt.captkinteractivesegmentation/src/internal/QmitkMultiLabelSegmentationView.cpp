@@ -50,6 +50,8 @@ See LICENSE.txt or http://www.mitk.org for details.
 #include <QInputDialog>
 #include <QMessageBox>
 
+#include "GeodesicTrainingSegmentation.h"
+
 #include "tinyxml.h"
 
 #include <itksys/SystemTools.hxx>
