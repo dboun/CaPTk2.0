@@ -1,1 +1,2 @@
 mitkFunctionAddExternalProject(NAME GuidelinesSupportLibrary ON DOC "Use Microsoft's implementation of the Guidelines Support Library (GSL)")
+mitkFunctionAddExternalProject(NAME JsonCpp ON DOC "Use jsoncpp library")
