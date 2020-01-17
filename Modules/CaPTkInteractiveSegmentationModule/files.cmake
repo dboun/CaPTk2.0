@@ -13,10 +13,10 @@
 # MAKE_LIST_OF_PATHS_RELATIVE_TO(YAML_ALL "${YAML_ALL}" "${CMAKE_CURRENT_LIST_DIR}/src")
 # MAKE_LIST_OF_PATHS_RELATIVE_TO(YAML_HEADERS "${YAML_HEADERS}" "${CMAKE_CURRENT_LIST_DIR}")
 
-### Fetch the jsoncpp source files (and make them be relative to src/)
-file(GLOB_RECURSE YAMLCPP_FILES RELATIVE 
-  "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/third_party/yaml-cpp/*"
-)
+# ### Fetch the jsoncpp source files (and make them be relative to src/)
+# file(GLOB_RECURSE YAMLCPP_FILES RELATIVE 
+#   "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/third_party/yaml-cpp/*"
+# )
 ### Fetch the jsoncpp source files (and make them be relative to src/)
 file(GLOB_RECURSE JSONCPP_SOURCE_FILES RELATIVE 
   "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/third_party/jsoncpp/src/*"
@@ -50,7 +50,7 @@ set(CPP_FILES
   UtilImageToCvMatGTS.cpp
   UtilItkGTS.cpp 
 
-  ${YAMLCPP_FILES}
+  # ${YAMLCPP_FILES}
   ${JSONCPP_SOURCE_FILES}
 )
 

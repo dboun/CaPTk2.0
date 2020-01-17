@@ -1,0 +1,1 @@
+include(../CMakeExternals/YamlCppCMakeLists.txt)
