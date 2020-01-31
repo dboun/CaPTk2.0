@@ -953,6 +953,9 @@ void QmitkExtWorkbenchWindowAdvisor::PostWindowOpen()
       mitk::WorkbenchUtil::OpenEditor(configurer->GetWindow()->GetActivePage(),dsInput);
     }
   }
+
+  // Set CBICA logo
+  mitk::WorkbenchUtil::SetDepartmentLogoPreference(":/org.mitk.cbica.captk.application/cbica-logo.jpg", context);
 }
 
 void QmitkExtWorkbenchWindowAdvisor::onIntro()
