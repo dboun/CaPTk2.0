@@ -18,6 +18,16 @@ See LICENSE.txt or http://www.mitk.org for details.
 
 #include <berryPlatformUI.h>
 
+#include <berryPlatform.h>
+#include "berryPlatform.h"
+#include "berryPlatformUI.h"
+#include "berryIWorkbench.h"
+#include "berryIConfigurationElement.h"
+#include "berryIExtensionRegistry.h"
+#include "berryIExtension.h"
+#include <berryIBerryPreferencesService.h>
+#include <berryIQtPreferencePage.h>
+
 #include "QmitkCaPTkAppWorkbenchAdvisor.h"
 
 QmitkCaPTkApplication::QmitkCaPTkApplication()
@@ -27,6 +37,10 @@ QmitkCaPTkApplication::QmitkCaPTkApplication()
 
 QVariant QmitkCaPTkApplication::Start(berry::IApplicationContext* /*context*/)
 {
+  berry::Platform::GetPreferencesService()->GetSystemPreferences()->Node(
+    "org.mitk.editors.stdmultiwidget"
+  )->Put("DepartmentLogo", ":/org.mitk.cbica.captk.application/cbica-logo.jpg");
+
   QScopedPointer<berry::Display> display(berry::PlatformUI::CreateDisplay());
 
   QScopedPointer<QmitkCaPTkAppWorkbenchAdvisor> wbAdvisor(new QmitkCaPTkAppWorkbenchAdvisor());
