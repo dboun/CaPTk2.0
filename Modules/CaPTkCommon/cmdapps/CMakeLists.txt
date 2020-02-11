@@ -8,3 +8,11 @@ if(BUILD_CaPTkCohortJsonOperationsCmdApp)
     DEPENDS MitkCaPTkCommon
   )
 endif()
+
+
+  mitkFunctionCreateCommandLineApp(
+    NAME CaPTkTestPropertiesCmdApp
+    CPP_FILES CaPTkTestPropertiesCmdApp.cpp
+    PACKAGE_DEPENDS ITK Qt5|Core
+    DEPENDS MitkCaPTkCommon
+  )
