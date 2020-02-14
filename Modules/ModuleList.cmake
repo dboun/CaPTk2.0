@@ -3,10 +3,16 @@
 
 ### Attention: If a module depends on another, it should be after it!
 
-set(MITK_MODULES
+set( MITK_MODULES
+
+### GENERAL
   CaPTkCommon
-  CaPTkPHIEstimator
+  CaPTkExample
   CaPTkTraining
   CaPTkInteractiveSegmentation
-  CaPTkExample
+
+### BRAIN
+  CaPTkPHIEstimator
+  CaPTkPseudoProgression
+
 )
