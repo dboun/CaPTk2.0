@@ -4,6 +4,7 @@
 set(CPP_FILES
 	CaPTkFeatureExtractionClass.cpp
 	CaPTkFeatureScalingClass.cpp
+	NiftiDataManager.cpp
 )
 
 set(UI_FILES
@@ -16,6 +17,7 @@ set(MOC_H_FILES
 	include/CaPTkEnums.h
 	include/CaPTkFeatureExtractionClass.h
 	include/CaPTkFeatureScalingClass.h
+	include/NiftiDataManager.h
 )
 
 set(H_FILES
@@ -24,6 +26,7 @@ set(H_FILES
 	include/CaPTkEnums.h
 	include/CaPTkFeatureExtractionClass.h
 	include/CaPTkFeatureScalingClass.h
+	include/NiftiDataManager.h
 )
 
 set(RESOURCE_FILES
