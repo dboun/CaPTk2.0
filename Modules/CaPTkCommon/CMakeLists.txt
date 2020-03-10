@@ -8,4 +8,8 @@ mitk_create_module(
   DEPENDS MitkMultilabel MitkCore
 )
 
+if(MODULE_IS_ENABLED)
+  add_subdirectory(test)
+endif()
+
 add_subdirectory(cmdapps)

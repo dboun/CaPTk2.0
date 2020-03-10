@@ -30,6 +30,8 @@ set(MOC_H_FILES
 	include/CaPTkROIConstructionHelperItk.hxx
 	include/CaPTkROIConstructionImplementation.h
 	include/CaPTkROIConstructionImplementation.hxx
+	include/CaPTkItkAdaptiveGeodesicDistanceFilter.h
+	include/CaPTkItkAdaptiveGeodesicDistanceFilter.hxx
 )
 
 set(H_FILES
@@ -46,6 +48,8 @@ set(H_FILES
 	include/CaPTkROIConstructionHelperItk.hxx
 	include/CaPTkROIConstructionImplementation.h
 	include/CaPTkROIConstructionImplementation.hxx
+	include/CaPTkItkAdaptiveGeodesicDistanceFilter.h
+	include/CaPTkItkAdaptiveGeodesicDistanceFilter.hxx
 )
 
 set(RESOURCE_FILES

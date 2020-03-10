@@ -15,7 +15,7 @@ if(NOT DEFINED CaPTkData_DIR)
   set(CaPTkData_DIR ${ep_prefix}/src/${proj}/)
 
   ExternalProject_Add(${proj}
-    URL https://github.com/CBICA/CaPTk2.0/releases/download/CaPTk-data/CaPTk-data-20200226.tar.gz
+    URL https://github.com/CBICA/CaPTk2.0/releases/download/CaPTk-data/CaPTk-data-20200310.tar.gz
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
