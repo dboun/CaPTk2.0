@@ -70,6 +70,7 @@ private:
         typename DiffType::Pointer diff = DiffType::New();
         diff->SetToleranceRadius( 0 );
         diff->SetDifferenceThreshold( 0.001 ); // So that comparing int to floats is fine
+        diff->VerifyInputInformationOn();
 
         diff->SetValidInput( validImage );
         diff->SetTestInput( testImage );
@@ -168,7 +169,7 @@ public:
 
         /*---- Compare output image with the "ground truth" ----*/
 
-        CPPUNIT_ASSERT_MESSAGE( "Valid/Test image equality", 
+        CPPUNIT_ASSERT_MESSAGE( "Valid & Test images are not equal", 
                 Equal<ImageTypeFloat2D>(outputImageFloat2D, filter->GetOutput())
         );
     }

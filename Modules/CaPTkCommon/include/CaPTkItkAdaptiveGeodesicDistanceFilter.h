@@ -6,8 +6,9 @@
 // that you want to be part of the public interface of your module.
 #include <MitkCaPTkCommonExports.h>
 
-#include "itkImage.h"
-#include "itkImageToImageFilter.h"
+#include <itkImage.h>
+#include <itkImageToImageFilter.h>
+#include <itkTestingComparisonImageFilter.h>
 
 namespace itk
 {
@@ -75,19 +76,13 @@ public:
   itkSetMacro(Mask, typename TInputImage::Pointer)
 
   itkSetMacro(Labels, typename LabelsImageType::Pointer);
- 
+
 protected:
   AdaptiveGeodesicDistanceFilter(); // protected to force factory usage
 
   /** \brief Used internally to separate the actual calculations */
-  static
-  typename TOutputImage::Pointer
-  InternalProcessing(
-    const TInputImage* inputImage,
-    const TInputImage* mask,
-    const LabelsImageType* labels,
-    const int labelOfInterest,
-    bool limitAt255);
+  void
+  InternalProcessing();
 
 protected:
 
@@ -107,6 +102,9 @@ private:
 
   /// Computations will happen only for pixels/voxels that are not zero in this mask
   typename TInputImage::Pointer m_Mask;
+
+  /// Also holds the mask. Used to distinguish times when the user set UseInputImageAsMask.
+  typename TInputImage::Pointer m_EffectiveMask;
 
   /// Holds the labels indicating the different regions (can be scribbles or a segmentation)
   typename LabelsImageType::Pointer m_Labels;
