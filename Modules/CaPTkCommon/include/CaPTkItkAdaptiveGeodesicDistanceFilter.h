@@ -9,6 +9,9 @@
 #include <itkImage.h>
 #include <itkImageToImageFilter.h>
 #include <itkTestingComparisonImageFilter.h>
+#include <itkImageRegionIterator.h>
+#include <itkImageRegionIteratorWithIndex.h>
+#include <itkNeighborhoodIterator.h>
 
 namespace itk
 {
@@ -83,6 +86,12 @@ protected:
   /** \brief Used internally to separate the actual calculations */
   void
   InternalProcessing();
+
+	/** \brief For internal use */
+	template <class TImageType>
+	inline double square(typename TImageType::PixelType x) {
+		return static_cast<double>(x) * x;
+	}
 
 protected:
 

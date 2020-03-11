@@ -1,8 +1,10 @@
 #include "mitkTestingMacros.h"
 #include <mitkTestingConfig.h>
 #include "mitkTestFixture.h"
+#include "mitkIOUtil.h"
 
 #include "itkImageFileReader.h"
+#include "itkImageFileWriter.h"
 #include <itkTestingComparisonImageFilter.h>
 
 #include <iostream>
@@ -52,13 +54,28 @@ private:
 
     /** \brief Helper function to read an image */
     template <class TImageType>
-    static typename TImageType::Pointer ReadImage(const std::string& path)
+    static typename TImageType::Pointer 
+    ReadImage(const std::string& path)
     {
         using ReaderType = itk::ImageFileReader<TImageType>;
         typename ReaderType::Pointer reader = ReaderType::New();
         reader->SetFileName(path);
         reader->Update();
         return reader->GetOutput();
+    }
+
+    /** \brief Helper function to write an image */
+    template <class TImageType>
+    static void 
+    WriteImage(
+            typename TImageType::Pointer image, 
+            const std::string& path)
+    {
+        using WriterType = itk::ImageFileWriter<TImageType>;
+        typename WriterType::Pointer writer = WriterType::New();
+        writer->SetInput(image);
+        writer->SetFileName(path);
+        writer->Update();
     }
 
     /** \brief Helper function to check if every pixel pair of two images are the same */
@@ -168,6 +185,11 @@ public:
         }
 
         /*---- Compare output image with the "ground truth" ----*/
+
+        CPPUNIT_FAIL(mitk::IOUtil::GetTempPath());
+
+        WriteImage<ImageTypeFloat2D>(filter->GetOutput(), 
+                        mitk::IOUtil::GetTempPath() + "/AGD_test_Try2D_out.nii.gz");
 
         CPPUNIT_ASSERT_MESSAGE( "Valid & Test images are not equal", 
                 Equal<ImageTypeFloat2D>(outputImageFloat2D, filter->GetOutput())
