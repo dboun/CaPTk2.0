@@ -186,10 +186,8 @@ public:
 
         /*---- Compare output image with the "ground truth" ----*/
 
-        CPPUNIT_FAIL(mitk::IOUtil::GetTempPath());
-
         WriteImage<ImageTypeFloat2D>(filter->GetOutput(), 
-                        mitk::IOUtil::GetTempPath() + "/AGD_test_Try2D_out.nii.gz");
+                        mitk::IOUtil::GetTempPath() + "/CaPTk_out.nii.gz");
 
         CPPUNIT_ASSERT_MESSAGE( "Valid & Test images are not equal", 
                 Equal<ImageTypeFloat2D>(outputImageFloat2D, filter->GetOutput())

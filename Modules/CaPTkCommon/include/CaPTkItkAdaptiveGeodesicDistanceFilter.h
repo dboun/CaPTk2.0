@@ -61,7 +61,8 @@ public:
 
   /*---- Custom types ----*/
 
-  using LabelsImageType = itk::Image<int, TInputImage::ImageDimension>;
+  using LabelsImageType = itk::Image<int,   TInputImage::ImageDimension>;
+  using FloatImageType  = itk::Image<float, TInputImage::ImageDimension>;
 
   /*---- Setters and Getters ----*/
 

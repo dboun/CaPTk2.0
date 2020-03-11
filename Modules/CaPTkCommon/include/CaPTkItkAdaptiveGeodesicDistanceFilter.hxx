@@ -166,22 +166,23 @@ InternalProcessing()
     typename ImageType::Pointer input = ImageType::New();
     input->Graft(const_cast<ImageType *>(this->GetInput()));
 
-    using Iterator          = itk::ImageRegionIterator<ImageType>;
+    using IteratorFloat     = itk::ImageRegionIterator<FloatImageType>;
 	using IteratorLabels    = itk::ImageRegionIterator<LabelsImageType>;
 	using IdxIterator       = itk::ImageRegionIteratorWithIndex<ImageType>;
     using NIterator         = itk::NeighborhoodIterator<ImageType>;
+    using NIteratorFloat    = itk::NeighborhoodIterator<FloatImageType>;
 
     /*---- Allocate output image ----*/
 
-    typename ImageType::Pointer output = ImageType::New();
+    typename FloatImageType::Pointer output = FloatImageType::New();
     output->SetRegions( input->GetLargestPossibleRegion() );
     output->SetRequestedRegion( input->GetLargestPossibleRegion() );
     output->SetBufferedRegion( input->GetBufferedRegion() );
     output->Allocate();
     output->FillBuffer((m_LimitAt255) ? 
             255 : 
-            static_cast<typename ImageType::PixelType>(
-                itk::NumericTraits< typename ImageType::PixelType >::max() - 1
+            static_cast<typename FloatImageType::PixelType>(
+                itk::NumericTraits< typename FloatImageType::PixelType >::max() - 1
             )
     ); // 255 or (maximum_possible_value - 1)
     output->SetDirection(input->GetDirection());
@@ -191,7 +192,7 @@ InternalProcessing()
     /*---- Initialize values for output image 
            (0 at pixels of label of interest, max elsewhere [set above]) ----*/
 
-    Iterator       outIter(output,   output->GetLargestPossibleRegion());
+    IteratorFloat  outIter(output,   output->GetLargestPossibleRegion());
     IteratorLabels labIter(m_Labels, m_Labels->GetLargestPossibleRegion());
     outIter.GoToBegin();
     labIter.GoToBegin();
@@ -216,9 +217,9 @@ InternalProcessing()
     }
 
     // Iterators that are used in the loops
-    IdxIterator maskIter(m_EffectiveMask, m_EffectiveMask->GetLargestPossibleRegion());
-    NIterator outNIter(radius, output, output->GetLargestPossibleRegion());
-    NIterator inputNIter(radius, input, input->GetLargestPossibleRegion());
+    IdxIterator    maskIter(m_EffectiveMask, m_EffectiveMask->GetLargestPossibleRegion());
+    NIteratorFloat outNIter(radius, output, output->GetLargestPossibleRegion());
+    NIterator      inputNIter(radius, input, input->GetLargestPossibleRegion());
 
     // Helper variables that are used in the loops
     // Declaring them outside the loops makes an actual difference speed-wise
@@ -241,7 +242,7 @@ InternalProcessing()
             
             if (ImageType::ImageDimension == 2)
             {
-                // 2D
+                // [ 2D ]
 
                 inpCenterPixel = inputNIter.GetPixel(4);
 
@@ -264,10 +265,9 @@ InternalProcessing()
                 }
             }
             else {
-                // 3D
+                // [ 3D ]
                 
                 inpCenterPixel = inputNIter.GetPixel(13);
-                //gamPixel = iterGamma.Get();
 
                 arr[13] = outNIter.GetCenterPixel();
                 arr[0]  = outNIter.GetPixel(4)  + sqrt(1.0 + square<ImageType>(
@@ -329,10 +329,9 @@ InternalProcessing()
 
             if (ImageType::ImageDimension == 2) 
             {
-                // 2D
+                // [ 2D ]
 
                 inpCenterPixel = inputNIter.GetPixel(4);
-                //gamPixelB = iterGamma.Get();
 
                 arr[4] = outNIter.GetCenterPixel();
                 arr[0] = outNIter.GetPixel(5) + sqrt(1.0 + square<ImageType>(
@@ -354,10 +353,9 @@ InternalProcessing()
             }
             else
             {
-                // 3D
+                // [ 3D ]
 
                 inpCenterPixel = inputNIter.GetPixel(13);
-                //gamPixelB = iterGamma.Get();
 
                 arr[13] = outNIter.GetCenterPixel();
                 arr[0] = outNIter.GetPixel(22) + sqrt(1.0 + square<ImageType>(
