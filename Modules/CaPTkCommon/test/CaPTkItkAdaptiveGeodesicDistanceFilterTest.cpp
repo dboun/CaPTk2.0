@@ -3,6 +3,7 @@
 #include "mitkTestFixture.h"
 
 #include "itkImageFileReader.h"
+#include <itkTestingComparisonImageFilter.h>
 
 #include <iostream>
 #include <fstream>
@@ -20,13 +21,24 @@ class CaPTkItkAdaptiveGeodesicDistanceFilterTestSuite : public mitk::TestFixture
     // MITK_TEST(Try3D);
     // MITK_TEST(Try4D);
     CPPUNIT_TEST_SUITE_END();
-
+    
     using ImageTypeFloat2D = itk::Image<float, 2>; 
     using ImageTypeInt2D   = itk::Image<int, 2>; 
     using ImageTypeFloat3D = itk::Image<float, 3>;
+    using ImageTypeInt3D   = itk::Image<int, 3>; 
+
+    using DiffFloat2D = itk::Testing::ComparisonImageFilter<ImageTypeFloat2D, ImageTypeFloat2D>;
+    using DiffInt2D   = itk::Testing::ComparisonImageFilter<ImageTypeInt2D, ImageTypeInt2D>;
+    using DiffFloat3D = itk::Testing::ComparisonImageFilter<ImageTypeFloat3D, ImageTypeFloat3D>;
+    using DiffInt3D   = itk::Testing::ComparisonImageFilter<ImageTypeInt3D, ImageTypeInt3D>;
 
 private:
     std::string CAPTK_DATA_DIR;
+
+    DiffFloat2D::Pointer diffFloat2D;
+    DiffInt2D::Pointer diffInt2D;
+    DiffFloat3D::Pointer diffFloat3D;
+    DiffInt3D::Pointer diffInt3D;
 
     /*---- Input and expected output images ----*/
 
@@ -48,11 +60,37 @@ private:
     ImageTypeFloat2D::Pointer   maskImageFloat2D;
     ImageTypeFloat3D::Pointer   maskImageFloat3D;
 
+    // template <class TImageType>
+    // TImageType::Pointer ReadImage(std::string path)
+    // {
+    //     using ReaderType = itk::ImageFileReader<TImageType>;
+    //     ReaderType::Pointer reader = ReaderType::New();
+    //     reader->SetFileName(path);
+    //     reader->Update();
+    //     return reader->GetOutput();
+    // }
+
 public:
     void
     setUp() override
     {
         CAPTK_DATA_DIR = captk::data::absolute_search_dirs[0];
+
+        diffFloat2D = DiffFloat2D::New();
+        diffFloat2D->SetDifferenceThreshold( 0.001 );
+        diffFloat2D->SetToleranceRadius( 0 );
+
+        diffInt2D = DiffInt2D::New();
+        diffInt2D->SetDifferenceThreshold( 0 );
+        diffInt2D->SetToleranceRadius( 0 );
+
+        diffFloat3D = DiffFloat3D::New();
+        diffFloat3D->SetDifferenceThreshold( 0.001 );
+        diffFloat3D->SetToleranceRadius( 0 );
+
+        diffInt3D = DiffInt3D::New();
+        diffInt3D->SetDifferenceThreshold( 0 );
+        diffInt3D->SetToleranceRadius( 0 );
 
         /*---- Read input and expected output images ----*/
 
@@ -76,22 +114,22 @@ public:
         ReaderTypeFloat2D::Pointer reader13 = ReaderTypeFloat2D::New();
         ReaderTypeFloat3D::Pointer reader14 = ReaderTypeFloat3D::New();
 
-        reader1->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D"
+        reader1->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D/"
                                               "small2D.nii.gz");
-        reader2->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D"
+        reader2->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D/"
                                               "small2D.nii.gz");
-        reader3->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D"
+        reader3->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D/"
                                               "small2D.nii.gz");
-        reader4->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_3D"
+        reader4->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_3D/"
                                               "small3D.nii.gz");
 
-        reader5->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D"
+        reader5->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D/"
                                               "small2D-labels.nii.gz");
-        reader6->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D"
+        reader6->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D/"
                                               "small2D-labels.nii.gz");
-        reader7->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D"
+        reader7->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_2D/"
                                               "small2D-labels.nii.gz");
-        reader8->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_3D"
+        reader8->SetFileName(CAPTK_DATA_DIR + "/datasets/ExampleSmall/Subject_3D/"
                                               "small3D-labels.nii.gz");
 
         reader9->SetFileName(CAPTK_DATA_DIR + "/test-data/Common/AdaptiveGeodesicDistance/"
@@ -157,26 +195,26 @@ public:
 
     void Try2D()
     {
-        /*---- Read image ----*/
+        // /*---- Read image ----*/
 
-        using ReaderType = itk::ImageFileReader<ImageTypeFloat2D>;
-        ReaderType::Pointer reader = ReaderType::New();
-        reader->SetFileName(CAPTK_DATA_DIR 
-            + "/test-data/Common/AdaptiveGeodesicDistance/"
-            "small2D-agd-result-lb2-limit255-imageasmask.nii.gz");
+        // using ReaderType = itk::ImageFileReader<ImageTypeFloat2D>;
+        // ReaderType::Pointer reader = ReaderType::New();
+        // reader->SetFileName(CAPTK_DATA_DIR 
+        //     + "/test-data/Common/AdaptiveGeodesicDistance/"
+        //     "small2D-agd-result-lb2-limit255-imageasmask.nii.gz");
         
-        try
-        {
-            reader->Update();
-        }
-        catch (const itk::ExceptionObject &err)
-        {
-            CPPUNIT_FAIL(std::string(
-                         "Reading the input image failed. "
-                         "This might be because you are on an older version of the CaPTkData. "
-                         "If that is the case, please rebuild your superbuild. Exception was: ") + 
-                     err.what());
-        }
+        // try
+        // {
+        //     reader->Update();
+        // }
+        // catch (const itk::ExceptionObject &err)
+        // {
+        //     CPPUNIT_FAIL(std::string(
+        //                  "Reading the input image failed. "
+        //                  "This might be because you are on an older version of the CaPTkData. "
+        //                  "If that is the case, please rebuild your superbuild. Exception was: ") + 
+        //              err.what());
+        // }
 
         /*---- Run filter ----*/
 
@@ -184,7 +222,8 @@ public:
             itk::captk::AdaptiveGeodesicDistanceFilter< ImageTypeFloat2D, ImageTypeFloat2D >;
         FilterType::Pointer filter = FilterType::New();
 
-        filter->SetInput( reader->GetOutput() );
+        filter->SetInput( inputImageFloat2D );
+        filter->SetLabels( inputLabelsInt2D );
         filter->SetLabelOfInterest( 2 );
         filter->LimitAt255On();
 
@@ -197,6 +236,18 @@ public:
             CPPUNIT_FAIL(std::string("Updating the filter failed. Exception was: ") +
                          err.what());
         }
+
+        /*---- Compare output image with the "ground truth" ----*/
+
+        diffFloat2D->SetValidInput( outputImageFloat2D );
+        diffFloat2D->SetTestInput( filter->GetOutput() );
+        diffFloat2D->UpdateLargestPossibleRegion();
+        // const double averageIntensityDifference = 
+        //         diffFloat2D->GetTotalDifference();
+        const unsigned long numberOfPixelsWithDifferences = 
+                diffFloat2D->GetNumberOfPixelsWithDifferences();
+
+        CPPUNIT_ASSERT_MESSAGE("Should be equal", numberOfPixelsWithDifferences == 0);
 
         // CPPUNIT_ASSERT_MESSAGE(
         //     "Always passes",
