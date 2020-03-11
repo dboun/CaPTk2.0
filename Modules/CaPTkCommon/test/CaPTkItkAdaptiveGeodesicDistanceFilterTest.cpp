@@ -242,9 +242,9 @@ public:
 	start[3] = 0; // first index on t
 
 	ImageType4D::SizeType size;
-	size[0] = 200; // size along X
-	size[1] = 200; // size along Y
-	size[2] = 200; // size along Z
+	size[0] = 3; // size along X
+	size[1] = 3; // size along Y
+	size[2] = 3; // size along Z
 	size[3] = 2;   // size along t
 
 	ImageType4D::RegionType region;
@@ -253,6 +253,7 @@ public:
 
 	image->SetRegions(region);
 	image->Allocate();
+	image->FillBuffer(1);
 
 	/*---- Run filter (we want it to fail) ----*/
 
@@ -262,7 +263,7 @@ public:
 
 	filter->SetInput( image );
 	filter->SetLabels( image );
-	filter->SetLabelOfInterest( 2 );
+	filter->SetLabelOfInterest( 1 );
 	filter->LimitAt255On();
 
         try
