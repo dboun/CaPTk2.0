@@ -401,7 +401,15 @@ InternalProcessing()
         --maskIter;
     }
 
-    this->GraftOutput(output);
+    /*---- Cast the output from float pixel type 
+           to the desired output type ----*/
+
+    using CastFilter = itk::CastImageFilter<FloatImageType, TOutputImage>;
+    typename CastFilter::Pointer castFilter = CastFilter::New();
+    castFilter->SetInput( output );
+    castFilter->Update();
+
+    this->GraftOutput( castFilter->GetOutput() );
 }
 
 }

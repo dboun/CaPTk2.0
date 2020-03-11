@@ -9,6 +9,7 @@
 #include <itkImage.h>
 #include <itkImageToImageFilter.h>
 #include <itkTestingComparisonImageFilter.h>
+#include <itkCastImageFilter.h>
 #include <itkImageRegionIterator.h>
 #include <itkImageRegionIteratorWithIndex.h>
 #include <itkNeighborhoodIterator.h>
@@ -40,53 +41,53 @@ namespace captk
  */
 template <typename TInputImage, typename TOutputImage>
 class MITKCAPTKCOMMON_EXPORT AdaptiveGeodesicDistanceFilter 
-          : public ImageToImageFilter<TInputImage, TOutputImage>
+					: public ImageToImageFilter<TInputImage, TOutputImage>
 {
 public:
-  /*---- Code needed for itk filters ----*/
+	/*---- Code needed for itk filters ----*/
 
-  ITK_DISALLOW_COPY_AND_ASSIGN(AdaptiveGeodesicDistanceFilter);
+	ITK_DISALLOW_COPY_AND_ASSIGN(AdaptiveGeodesicDistanceFilter);
  
-  using Self = AdaptiveGeodesicDistanceFilter;
-  using Superclass = ImageToImageFilter<TInputImage, TInputImage>;
-  using Pointer = SmartPointer<Self>;
-  using ConstPointer = SmartPointer<const Self>;
+	using Self = AdaptiveGeodesicDistanceFilter;
+	using Superclass = ImageToImageFilter<TInputImage, TInputImage>;
+	using Pointer = SmartPointer<Self>;
+	using ConstPointer = SmartPointer<const Self>;
 
-  itkNewMacro(Self);
+	itkNewMacro(Self);
  
-  itkTypeMacro(AdaptiveGeodesicDistanceFilter, ImageToImageFilter);
+	itkTypeMacro(AdaptiveGeodesicDistanceFilter, ImageToImageFilter);
  
-  using ImageType = TInputImage;
-  using PixelType = typename ImageType::PixelType;
+	using ImageType = TInputImage;
+	using PixelType = typename ImageType::PixelType;
 
-  /*---- Custom types ----*/
+	/*---- Custom types ----*/
 
-  using LabelsImageType = itk::Image<int,   TInputImage::ImageDimension>;
-  using FloatImageType  = itk::Image<float, TInputImage::ImageDimension>;
+	using LabelsImageType = itk::Image<int,   TInputImage::ImageDimension>;
+	using FloatImageType  = itk::Image<float, TInputImage::ImageDimension>;
 
-  /*---- Setters and Getters ----*/
+	/*---- Setters and Getters ----*/
 
-  itkSetMacro(LabelOfInterest, PixelType);
-  itkGetConstMacro(LabelOfInterest, PixelType);
+	itkSetMacro(LabelOfInterest, PixelType);
+	itkGetConstMacro(LabelOfInterest, PixelType);
 
-  itkSetMacro(LimitAt255, bool);
-  itkGetConstMacro(LimitAt255, bool);
-  itkBooleanMacro(LimitAt255); // creates name##On() and name##Off()
+	itkSetMacro(LimitAt255, bool);
+	itkGetConstMacro(LimitAt255, bool);
+	itkBooleanMacro(LimitAt255); // creates name##On() and name##Off()
 
-  itkSetMacro(UseInputImageAsMask, bool);
-  itkGetConstMacro(UseInputImageAsMask, bool);
-  itkBooleanMacro(UseInputImageAsMask);
+	itkSetMacro(UseInputImageAsMask, bool);
+	itkGetConstMacro(UseInputImageAsMask, bool);
+	itkBooleanMacro(UseInputImageAsMask);
 
-  itkSetMacro(Mask, typename TInputImage::Pointer)
+	itkSetMacro(Mask, typename TInputImage::Pointer)
 
-  itkSetMacro(Labels, typename LabelsImageType::Pointer);
+	itkSetMacro(Labels, typename LabelsImageType::Pointer);
 
 protected:
-  AdaptiveGeodesicDistanceFilter(); // protected to force factory usage
+	AdaptiveGeodesicDistanceFilter(); // protected to force factory usage
 
-  /** \brief Used internally to separate the actual calculations */
-  void
-  InternalProcessing();
+	/** \brief Used internally to separate the actual calculations */
+	void
+	InternalProcessing();
 
 	/** \brief For internal use */
 	template <class TImageType>
@@ -96,28 +97,28 @@ protected:
 
 protected:
 
-  void 
-  GenerateData() override;
+	void 
+	GenerateData() override;
 
 private:
 
-  /// Calculation will ignore other labels present in the "labels" image, apart from this label
-  PixelType m_LabelOfInterest = 0;
+	/// Calculation will ignore other labels present in the "labels" image, apart from this label
+	PixelType m_LabelOfInterest = 0;
 
-  /// Limit output values to [0,255] range. Makes it a more useful feature. Unlimited otherwise.
-  bool m_LimitAt255 = false;
+	/// Limit output values to [0,255] range. Makes it a more useful feature. Unlimited otherwise.
+	bool m_LimitAt255 = false;
 
-  /// Calculation will happen only on the non-zero pixels/voxels of the image (on by default)
-  bool m_UseInputImageAsMask = true;
+	/// Calculation will happen only on the non-zero pixels/voxels of the image (on by default)
+	bool m_UseInputImageAsMask = true;
 
-  /// Computations will happen only for pixels/voxels that are not zero in this mask
-  typename TInputImage::Pointer m_Mask;
+	/// Computations will happen only for pixels/voxels that are not zero in this mask
+	typename TInputImage::Pointer m_Mask;
 
-  /// Also holds the mask. Used to distinguish times when the user set UseInputImageAsMask.
-  typename TInputImage::Pointer m_EffectiveMask;
+	/// Also holds the mask. Used to distinguish times when the user set UseInputImageAsMask.
+	typename TInputImage::Pointer m_EffectiveMask;
 
-  /// Holds the labels indicating the different regions (can be scribbles or a segmentation)
-  typename LabelsImageType::Pointer m_Labels;
+	/// Holds the labels indicating the different regions (can be scribbles or a segmentation)
+	typename LabelsImageType::Pointer m_Labels;
 };
 
 }
