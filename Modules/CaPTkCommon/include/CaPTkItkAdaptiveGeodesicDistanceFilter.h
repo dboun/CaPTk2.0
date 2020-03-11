@@ -78,7 +78,7 @@ public:
 	itkGetConstMacro(UseInputImageAsMask, bool);
 	itkBooleanMacro(UseInputImageAsMask);
 
-	itkSetMacro(Mask, typename TInputImage::Pointer)
+	itkSetMacro(Mask, typename TInputImage::Pointer);
 
 	itkSetMacro(Labels, typename LabelsImageType::Pointer);
 
