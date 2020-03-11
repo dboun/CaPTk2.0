@@ -22,7 +22,7 @@ class CaPTkItkAdaptiveGeodesicDistanceFilterTestSuite : public mitk::TestFixture
     // MITK_TEST(Try2DFloatVsInt);
     // MITK_TEST(Try2DWithMask);
     // MITK_TEST(Try3D);
-    // MITK_TEST(Try4D);
+    MITK_TEST(Try4D);
     CPPUNIT_TEST_SUITE_END();
     
     using ImageTypeFloat2D = itk::Image<float, 2>; 
@@ -226,6 +226,54 @@ public:
 	// CPPUNIT_ASSERT_MESSAGE( "Valid & Test images are not equal", 
 	// 	Equal<ImageTypeFloat2D>(outputImageFloat2D, filter->GetOutput())
 	// );
+    }
+
+    void Try4D()
+    {
+	/*---- Create 4D int image ----*/
+
+	using ImageType4D = itk::Image<int, 4>;
+	ImageType4D::Pointer image = ImageType4D::New();
+
+	ImageType4D::IndexType start;
+	start[0] = 0; // first index on X
+	start[1] = 0; // first index on Y
+	start[2] = 0; // first index on Z
+	start[3] = 0; // first index on t
+
+	ImageType4D::SizeType size;
+	size[0] = 200; // size along X
+	size[1] = 200; // size along Y
+	size[2] = 200; // size along Z
+	size[3] = 2;   // size along t
+
+	ImageType4D::RegionType region;
+	region.SetSize(size);
+	region.SetIndex(start);
+
+	image->SetRegions(region);
+	image->Allocate();
+
+	/*---- Run filter (we want it to fail) ----*/
+
+	using FilterType = 
+	    itk::captk::AdaptiveGeodesicDistanceFilter< ImageType4D, ImageType4D >;
+	FilterType::Pointer filter = FilterType::New();
+
+	filter->SetInput( image );
+	filter->SetLabels( image );
+	filter->SetLabelOfInterest( 2 );
+	filter->LimitAt255On();
+
+        try
+	{
+	    filter->Update();
+	    CPPUNIT_FAIL("4D image didn't cause an exception");
+	}
+	catch(const itk::ExceptionObject &err)
+	{
+	    // we wanted it to cause an exception!
+	}
     }
 };
 
