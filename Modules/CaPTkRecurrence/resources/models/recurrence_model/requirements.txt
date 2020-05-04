@@ -1,0 +1,5 @@
+recurrence (3D)
+edema (3D)
+tc (3D)
+flair (3D)
+t2 (3D)
