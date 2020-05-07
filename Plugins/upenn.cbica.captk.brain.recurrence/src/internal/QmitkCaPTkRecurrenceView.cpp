@@ -53,7 +53,7 @@ const std::string QmitkCaPTkRecurrenceView::VIEW_ID = "upenn.cbica.captk.views.r
 QmitkCaPTkRecurrenceView::QmitkCaPTkRecurrenceView()
   : m_Parent(nullptr)
 {
-  // m_CaPTkRecurrence = new captk::CaPTkRecurrence(this);
+  m_CaPTkRecurrence = new captk::CaPTkRecurrence(this);
 }
 
 QmitkCaPTkRecurrenceView::~QmitkCaPTkRecurrenceView()
@@ -92,8 +92,8 @@ void QmitkCaPTkRecurrenceView::CreateQtPartControl(QWidget *parent)
   connect(m_Controls.lineEdit_CustomModelDir, SIGNAL(textChanged(QString)),
           this, SLOT(OnModelPathLineEditTextChanged(QString)));
 
-  // connect(m_CaPTkRecurrence, SIGNAL(done()),
-  //         this, SLOT(OnModuleDone()));
+  connect(m_CaPTkRecurrence, SIGNAL(done()),
+          this, SLOT(OnModuleDone()));
 
   /**** Initialize widgets ****/
 
@@ -303,48 +303,41 @@ void QmitkCaPTkRecurrenceView::OnOutputDirectoryButtonClicked()
 
 void QmitkCaPTkRecurrenceView::OnRunButtonPressed()
 {
-  QString modelDirPath = m_Controls.lineEdit_CustomModelDir->text();
+  QString modelDirPath = this->GetModelPath();
   QString subjectDirPath = m_Controls.lineEdit_SubjectDir->text();
   QString outputDirPath = m_Controls.lineEdit_OutputDir->text();
   bool trainNewModel = false; // true if training, false if using an existing model
-  bool useCustomModel = false; // true if using a custom model, false if using CBICA's CaPTk model
-
   if (m_Controls.m_cbUsageSelector->currentText() == "Train New Model") {
       trainNewModel = true;
-      useCustomModel = false;
   }
-  else if (m_Controls.m_cbUsageSelector->currentText() == "Use Existing Model") {
-      trainNewModel = false;
 
-      if  (m_Controls.m_cbModelSourceSelector->currentText() == "CBICA CaPTk Model") {
-          useCustomModel = false;
-      }
-      else if (m_Controls.m_cbModelSourceSelector->currentText() == "Custom") {
-          useCustomModel = true;
-      }
-
-  }
-  m_Controls.pushButtonRun->setDisabled(true);
   m_Controls.pushButtonRun->setText("Running Recurrence Prediction...");
+  m_Controls.pushButtonRun->setDisabled(true);
   
-  modelDirPath = modelDirPath;
   subjectDirPath = subjectDirPath;
   outputDirPath = outputDirPath;
   trainNewModel = trainNewModel;
-  useCustomModel = useCustomModel;
-  // m_CaPTkRecurrence->Run(
-  //  modelDirPath,
-  //  subjectDirPath,
-  //  outputDirPath,
-  //  trainNewModel,
-  //  useCustomModel
-  //  );
+
+  if (trainNewModel)
+  {
+    m_CaPTkRecurrence->Train(subjectDirPath, outputModelDirPath);
+  }
+  else
+  {
+    m_CaPTkRecurrence->Inference(subjectDirPath, modelDirPath, outputDirPath);
+  }
+
 }
 
 void QmitkCaPTkRecurrenceView::OnModuleDone()
 {
+    // Free memory
+    delete m_CaPTkRecurrence;
+    m_CaPTkRecurrence = new captk::CaPTkRecurrence(this);
+
+    // Reset state
+    m_Controls.pushButtonRun->setText("Run");
     m_Controls.pushButtonRun->setEnabled(true);
-    m_Controls.pushButtonRun->setText("Run Recurrence Prediction");
 }
 
 /************************************************************************/

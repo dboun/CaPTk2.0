@@ -6,9 +6,9 @@
 #include <mitkILifecycleAwarePart.h>
 
 #include "ui_QmitkCaPTkRecurrenceControls.h"
-// #include "CaPTkRecurrence.h"
+#include "CaPTkRecurrence.h"
 
-// class CaPTkRecurrence;
+class CaPTkRecurrence;
 
 // berry
 #include <berryIBerryPreferences.h>
@@ -100,8 +100,7 @@ protected:
   /// \brief Qt GUI file
   Ui::QmitkCaPTkRecurrenceControls m_Controls;
 
-  // captk::CaPTkRecurrence* m_CaPTkRecurrence;
-
+  captk::CaPTkRecurrence* m_CaPTkRecurrence;
 };
 
 #endif // QmitkCaPTkRecurrenceView_h
